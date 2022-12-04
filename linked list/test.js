@@ -45,8 +45,6 @@ class LinkedList {
         }
         currentNode = currentNode.next;
       }
-    } else {
-      console.log("Index out of range");
     }
   }
 
@@ -81,6 +79,45 @@ class LinkedList {
     let joinArr = listArr.join(" -> ");
     return joinArr;
   }
+
+  insertAt(value, index) {
+    if (index <= this.size - 1) {
+      if (index == this.size - 1) {
+        this.append(value);
+      } else if (index == 0) {
+        this.prepend(value);
+      } else {
+        let currentNode = this.at(index);
+        let nextNode = this.at(index + 1);
+        let node = new nodeFactory(value, nextNode);
+        currentNode.next = node;
+        this.size++;
+      }
+    } else {
+      console.log("Index out of range");
+    }
+  }
+
+  removeAt(index) {
+    if (index > this.size - 1 || index < 0) {
+      console.log("index out of range");
+    } else {
+      let currentNode = this.at(index);
+      let previousNode = this.at(index - 1);
+      let nextNode = this.at(index + 1);
+      if (index == this.size - 1) {
+        this.tail = previousNode;
+        previousNode.next = null;
+      } else if (index == 0) {
+        this.head = nextNode;
+        currentNode.next == null;
+      } else {
+        currentNode.next = null;
+        previousNode.next = nextNode;
+      }
+      this.size--;
+    }
+  }
 }
 
 function nodeFactory(value, next = null) {
@@ -89,10 +126,3 @@ function nodeFactory(value, next = null) {
     next: next,
   };
 }
-
-let newList = new LinkedList();
-newList.prepend(12);
-newList.prepend(200);
-newList.prepend(50);
-newList.prepend(90);
-newList.append(23);
