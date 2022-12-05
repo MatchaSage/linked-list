@@ -17,10 +17,19 @@ class LinkedList {
 
   append(value) {
     let node = new nodeFactory(value);
-    //Sets current tails next pointer to the new created node
-    this.tail.next = node;
-    //Sets new node as the new tail
-    this.tail = node;
+    //Sets node as tail if list size is 1
+    if (this.tail == null) {
+      this.tail = node;
+    }
+    //Sets node as head if list size is 1
+    if (this.head == null) {
+      this.head = node;
+    } else {
+      let previousNode = this.tail;
+      this.tail = node;
+      this.tail.next = null;
+      previousNode.next = this.tail;
+    }
     this.size++;
   }
 
@@ -126,3 +135,11 @@ function nodeFactory(value, next = null) {
     next: next,
   };
 }
+
+let newList = new LinkedList();
+
+newList.prepend("head");
+newList.prepend("newHead");
+newList.append("tail");
+let stringList = newList.toString();
+console.log(stringList);
